@@ -1,0 +1,52 @@
+vector<int> queen_cord;
+        vector<vector<string>> result;
+        int cord;
+        int j,k;        
+        int temp;
+        temp = 0;
+        for(int i=0; i<n; i++){
+            for(j=0; j<n; j++){  
+                for(k=temp; k<n; k++){
+                    // jth row kth col
+                    if(!check_attack(queen_cord, j, k)){
+                        break;
+                    }
+                } 
+                if(k<n){             
+                    queen_cord.push_back(k);
+                    temp = 0;
+                }
+                else{
+                    // backtrack
+                    j = j-2;
+                    if(j+1<0){
+                        break;
+                    }
+                    temp = queen_cord[j+1]+1;
+                    queen_cord.pop_back();
+                } 
+                
+            }
+
+            if(j==n){
+                cout<<"solution found";
+                vector<string> v;
+                int size = queen_cord.size();
+                for(int iter=0;iter<size; iter++){
+                    cout<<iter<<queen_cord[iter]<<endl;
+                    string s = "";
+                    for(int c=0; c<n; c++){
+                        if(c==queen_cord[iter]){
+                            s.append("Q");
+                        }
+                        else{
+                            s.append(".");
+                        }
+                    }
+                    v.push_back(s);
+                }
+            }
+            
+            
+        }
+        return result;
