@@ -1,7 +1,6 @@
 #include<iostream>
-#include<list>
 #include<vector>
-#include<set>
+#include<unordered_map>
 using namespace std;
 
 class Graph{
@@ -74,16 +73,40 @@ class Graph{
 			
 			return dist[dest];
 		}
-		
 };
+
+int min_dice_throws(int n, vector<pair<int,int> > snakes, vector<pair<int,int> > ladders){
+    Graph g(n+1);
+    unordered_map<int,int> m_snake;
+    unordered_map<int,int> m_ladder;
+    
+    int n_snakes = snakes.size();
+    for(int i=0; i<n_snakes; i++){
+    	m_snake[snakes[i].first] = snakes[i].second;
+	}
+	
+	int n_ladders = ladders.size();
+    for(int i=0; i<n_ladders; i++){
+    	m_ladder[ladders[i].first] = ladders[i].second;
+	}
+//    add edge for all valid moves
+    for(int i=1; i<=n; i++){
+//    	for all vertices i
+    	for(int move=1; move<=6; move++){
+    		if(m_snakes.find(i+move) != m_sankes.end()){
+    			g.addEdge(i,m_snakes[i+move],1);
+			}
+			else if(m_ladders.find(i+move) != m_ladders.end()){
+				g.addEdge(i,m_ladders[i+move],1);
+			}
+			else{
+				g.addEdge(i,i+move,1);
+			}
+		}
+	}	
+	cout<<g.dijkstra(1,n);
+}
+
 int main(){
-	Graph g(5);
-	g.addEdge(0,1,1);
-	g.addEdge(1,2,1);
-	g.addEdge(0,2,4);
-	g.addEdge(0,3,7);
-	g.addEdge(3,2,2);
-	g.addEdge(3,4,3);
-	g.printAdjList();
-	cout<<endl<<g.dijkstra(0,4)<<endl;
+	
 }
