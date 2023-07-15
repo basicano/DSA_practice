@@ -32,6 +32,8 @@ Node* reverse(Node *head){
 	return prev;
 }
 
+
+
 int main(){
 	Node *head;
 	
